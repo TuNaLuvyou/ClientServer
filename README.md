@@ -1,24 +1,24 @@
 # ClientServer
 
-A small FastAPI backend for authentication and user management using in-memory mock data.
+Backend FastAPI nhỏ cho chức năng đăng nhập, đăng ký và quản lý user bằng dữ liệu giả lưu trong bộ nhớ.
 
-## Features
+## Chức năng
 
-- Register users with role-based access control
-- Login with JSON request body and receive a JWT access token
-- Get the current authenticated user from the token
-- Store data in memory only (`mock_db.py`)
+- Đăng ký user theo role
+- Đăng nhập bằng JSON body và nhận JWT access token
+- Lấy thông tin user hiện tại từ token
+- Lưu dữ liệu hoàn toàn trong RAM (`mock_db.py`)
 
-## Tech Stack
+## Công nghệ sử dụng
 
 - FastAPI
 - Uvicorn
 - Passlib + bcrypt
 - python-jose
 
-## Requirements
+## Cài đặt môi trường
 
-Install the project dependencies:
+Tạo môi trường ảo và cài dependency:
 
 ```bash
 python3 -m venv venv
@@ -26,9 +26,9 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Run the server
+## Chạy server
 
-From the project folder:
+Từ thư mục project, chạy:
 
 ```bash
 cd /Users/trantu/Documents/Python/ClientServer
@@ -36,24 +36,24 @@ source venv/bin/activate
 python3 -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-Open the Swagger docs:
+Mở Swagger docs tại:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-## Default admin account
+## Tài khoản admin mặc định
 
-The mock database already contains an admin account:
+Mock database đã có sẵn tài khoản admin:
 
 - username: `admin01`
 - password: `admin123`
 
-Use this account to log in first, then create other users.
+Bạn đăng nhập bằng tài khoản này trước, sau đó mới tạo các user khác.
 
-## API Flow
+## Luồng API
 
-### 1. Login
+### 1. Đăng nhập
 
 `POST /auth/login`
 
@@ -75,7 +75,7 @@ Response:
 }
 ```
 
-### 2. Create a new user
+### 2. Tạo user mới
 
 `POST /auth/register`
 
@@ -96,9 +96,9 @@ Request body:
 }
 ```
 
-Only users with role `admin` can create new accounts.
+Chỉ user có role `admin` mới được phép tạo tài khoản mới.
 
-### 3. Get current user
+### 3. Lấy user hiện tại
 
 `GET /users/me`
 
@@ -110,13 +110,13 @@ Authorization: Bearer <access_token>
 
 ## Thunder Client
 
-1. Send `POST /auth/login` with a JSON body.
-2. Copy the returned `access_token`.
-3. Send `POST /auth/register` with the `Authorization: Bearer <access_token>` header.
-4. Use JSON body for the new user payload.
+1. Gửi `POST /auth/login` với body JSON.
+2. Copy `access_token` trả về.
+3. Gửi `POST /auth/register` kèm header `Authorization: Bearer <access_token>`.
+4. Body của user mới vẫn để dạng JSON.
 
-## Notes
+## Ghi chú
 
-- Login uses a JSON body, not OAuth2 form data.
-- The app stores data only in memory, so all users are lost when the server restarts.
-- If you change dependencies, keep `bcrypt<5` for compatibility with Passlib.
+- Login hiện dùng JSON body, không phải OAuth2 form data.
+- Dữ liệu chỉ lưu trong bộ nhớ nên khi restart server, toàn bộ user sẽ mất.
+- Nếu thay đổi dependency, nên giữ `bcrypt<5` để tương thích với Passlib.
